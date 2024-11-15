@@ -1,0 +1,6 @@
+Event_ID,Event_Name,Date_of_event,Start_time,Location,Organizers,Number_of_participants,Budget,Categories,Status
+1,"Street Food Festival",2024-06-15,10:00:00,"Shevchenko Park","City Council,Restaurant Association",5000,150000.00,"Food,Entertainment,Culture",Planned
+2,"Health Marathon",2024-07-20,08:30:00,"Central Stadium","'Olymp' Sports Club,Department of Health",1000,75000.50,"Sports,Health",Planned
+3,"Classical Music Concert",2024-05-10,19:00:00,"Philharmonic Hall","Philharmonic,Music Society",800,100000.00,"Music,Culture",Planned
+4,"Tech Conference",2024-09-05,09:00:00,"Innovation Conference Center","IT Association,University of Information Technology",1200,250000.00,"Technology,Education,Business",Planned
+5,"Charity Auction",2024-08-12,18:00:00,"'Premier' Hotel","'Hope' Charity Fund,Contemporary Art Gallery",300,50000.00,"Charity,Art",Planned
