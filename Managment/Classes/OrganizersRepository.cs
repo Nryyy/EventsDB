@@ -3,51 +3,52 @@ using Managment.ApplicationContext;
 using Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Managment.Classes
 {
-    public class LocationRepository : ILocation
+    public class OrganizersRepository : IOrganizers
     {
         private readonly DataContext dataContext;
         private bool disposed = false;
-        public LocationRepository(DataContext dataContext)
+
+        public OrganizersRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }
 
-        public void Create(Location location)
+        public void Create(Organizers organizer)
         {
-            if (!dataContext.Locations.Any(l => l.Name == location.Name))
+            if (!dataContext.Organizers.Any(o => o.Name == organizer.Name))
             {
-                dataContext.Locations.Add(location);
+                dataContext.Organizers.Add(organizer);
             }
             else
             {
-                throw new InvalidOperationException("Location with the same name already exists.");
+                throw new InvalidOperationException("Organizer with the same name already exists.");
             }
         }
 
         public void Delete(int id)
         {
-            dataContext.Locations.Remove(Get(id));
+            dataContext.Organizers.Remove(Get(id));
         }
 
-        public IEnumerable<Location> Get()
+        public IEnumerable<Organizers> Get()
         {
-            return dataContext.Locations;
+            return dataContext.Organizers;
         }
 
-        public Location? Get(int id)
+        public Organizers? Get(int id)
         {
-            return dataContext.Locations.Find(id);
+            return dataContext.Organizers.Find(id);
         }
-        public void Update(Location location)
+
+        public void Update(Organizers organizer)
         {
-            dataContext.Entry(location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dataContext.Entry(organizer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
         public void SaveChanges()

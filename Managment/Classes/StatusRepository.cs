@@ -1,53 +1,55 @@
 ﻿using Managment.Interfaces;
 using Managment.ApplicationContext;
 using Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Managment.Classes
 {
-    public class LocationRepository : ILocation
+    public class StatusRepository : IStatus
     {
         private readonly DataContext dataContext;
         private bool disposed = false;
-        public LocationRepository(DataContext dataContext)
+
+        public StatusRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }
 
-        public void Create(Location location)
+        public void Create(Status status)
         {
-            if (!dataContext.Locations.Any(l => l.Name == location.Name))
+            if (!dataContext.Status.Any(s => s.Name == status.Name))
             {
-                dataContext.Locations.Add(location);
+                dataContext.Status.Add(status);
             }
             else
             {
-                throw new InvalidOperationException("Location with the same name already exists.");
+                throw new InvalidOperationException("Status with the same name already exists.");
             }
         }
 
         public void Delete(int id)
         {
-            dataContext.Locations.Remove(Get(id));
+            dataContext.Status.Remove(Get(id));
         }
 
-        public IEnumerable<Location> Get()
+        public IEnumerable<Status> Get()
         {
-            return dataContext.Locations;
+            return dataContext.Status;
         }
 
-        public Location? Get(int id)
+        public Status? Get(int id)
         {
-            return dataContext.Locations.Find(id);
+            return dataContext.Status.Find(id);
         }
-        public void Update(Location location)
+
+        public void Update(Status status)
         {
-            dataContext.Entry(location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dataContext.Entry(status).State = EntityState.Modified;
         }
 
         public void SaveChanges()

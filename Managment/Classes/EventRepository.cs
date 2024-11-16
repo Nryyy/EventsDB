@@ -1,53 +1,54 @@
-﻿using Managment.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Managment.ApplicationContext;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Managment.Classes
 {
-    public class LocationRepository : ILocation
+    public class EventRepository
     {
         private readonly DataContext dataContext;
         private bool disposed = false;
-        public LocationRepository(DataContext dataContext)
+
+        public EventRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }
 
-        public void Create(Location location)
+        public void Create(Event @event)
         {
-            if (!dataContext.Locations.Any(l => l.Name == location.Name))
+            if (!dataContext.Events.Any(e => e.Name == @event.Name))
             {
-                dataContext.Locations.Add(location);
+                dataContext.Events.Add(@event);
             }
             else
             {
-                throw new InvalidOperationException("Location with the same name already exists.");
+                throw new InvalidOperationException("Event with the same name already exists.");
             }
+        }
+
+        public void Update(Event @event)
+        {
+            dataContext.Entry(@event).State = EntityState.Modified;
         }
 
         public void Delete(int id)
         {
-            dataContext.Locations.Remove(Get(id));
+            dataContext.Events.Remove(Get(id));
         }
 
-        public IEnumerable<Location> Get()
+        public IEnumerable<Event> Get()
         {
-            return dataContext.Locations;
+            return dataContext.Events;
         }
 
-        public Location? Get(int id)
+        public Event? Get(int id)
         {
-            return dataContext.Locations.Find(id);
-        }
-        public void Update(Location location)
-        {
-            dataContext.Entry(location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return dataContext.Events.Find(id);
         }
 
         public void SaveChanges()

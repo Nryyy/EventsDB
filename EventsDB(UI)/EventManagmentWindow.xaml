@@ -1,0 +1,122 @@
+﻿<Window x:Class="EventsDB_UI_.EventManagmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EventsDB_UI_"
+        mc:Ignorable="d"
+        Title="Event Management" Height="912" Width="900" Background="#FAFAFA">
+
+    <Window.Resources>
+        <!-- Style for buttons -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#6200EE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#3700B3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3700B3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Event Management" Foreground="White" FontSize="24" FontWeight="Bold"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" Background="#6200EE"
+                   Padding="10" Height="50" />
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,20,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Input fields for Event -->
+                <TextBlock Text="Event Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <TextBox x:Name="EventNameTextBox" Grid.Row="0" Grid.Column="1" Margin="10" Padding="5"/>
+
+                <TextBlock Text="Date of Performance:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <DatePicker x:Name="EventDatePicker" Grid.Row="1" Grid.Column="1" Margin="10" Padding="5"/>
+
+                <TextBlock Text="Time of Performance:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <TextBox x:Name="EventTimeTextBox" Grid.Row="2" Grid.Column="1" Margin="10" Padding="5"/>
+
+                <TextBlock Text="Location:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <ComboBox x:Name="LocationComboBox" Grid.Row="3" Grid.Column="1" Margin="10" DisplayMemberPath="Name" SelectedValuePath="Id" Padding="5"/>
+
+                <TextBlock Text="Organizer:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <ComboBox x:Name="OrganizerComboBox" Grid.Row="4" Grid.Column="1" Margin="10" DisplayMemberPath="Name" SelectedValuePath="Id" Padding="5"/>
+
+                <TextBlock Text="Category:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <ComboBox x:Name="CategoryComboBox" Grid.Row="5" Grid.Column="1" Margin="10" DisplayMemberPath="Name" SelectedValuePath="Id" Padding="5"/>
+
+                <TextBlock Text="Status:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <ComboBox x:Name="StatusComboBox" Grid.Row="6" Grid.Column="1" Margin="10" DisplayMemberPath="Name" SelectedValuePath="Id" Padding="5"/>
+
+                <TextBlock Text="Participants:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <TextBox x:Name="ParticipantsTextBox" Grid.Row="7" Grid.Column="1" Margin="10" Padding="5"/>
+
+                <TextBlock Text="Budget:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="10"/>
+                <TextBox x:Name="BudgetTextBox" Grid.Row="8" Grid.Column="1" Margin="10" Padding="5"/>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Buttons for actions -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Margin="0,20,0,0">
+            <Button Content="Save Event" Click="SaveEvent_Click"/>
+            <Button Content="Clear" Click="ClearFields_Click"/>
+            <Button Content="Parse Event" Click="ParseEvent_Click"/>
+        </StackPanel>
+
+        <!-- DataGrid for displaying events from the database -->
+        <DataGrid x:Name="EventsDataGrid" Grid.Row="3" Margin="0,20,0,0" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Event Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding DateOfPerfomance}" Width="*"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding TimeOfPerfomance}" Width="*"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location.Name}" Width="*"/>
+                <DataGridTextColumn Header="Organizer" Binding="{Binding Organizers.Name}" Width="*"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Categoty.Name}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="*"/>
+                <DataGridTextColumn Header="Participants" Binding="{Binding Participants}" Width="*"/>
+                <DataGridTextColumn Header="Budget" Binding="{Binding Budget}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

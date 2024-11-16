@@ -16,7 +16,7 @@ namespace Models
         public Organizers Organizers { get; set; }
         public int Participants { get; set; }
         public int Budget { get; set; }
-        public Categoty Categoty { get; set; }
+        public Category Categoty { get; set; }
         public Status Status { get; set; }
 
     }

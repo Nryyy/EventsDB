@@ -1,53 +1,55 @@
 ﻿using Managment.Interfaces;
 using Managment.ApplicationContext;
 using Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Managment.Classes
 {
-    public class LocationRepository : ILocation
+    public class CategoryRepository : ICategory
     {
         private readonly DataContext dataContext;
         private bool disposed = false;
-        public LocationRepository(DataContext dataContext)
+
+        public CategoryRepository(DataContext dataContext)
         {
             this.dataContext = dataContext;
         }
 
-        public void Create(Location location)
+        public void Create(Category category)
         {
-            if (!dataContext.Locations.Any(l => l.Name == location.Name))
+            if (!dataContext.Categories.Any(c => c.Name == category.Name))
             {
-                dataContext.Locations.Add(location);
+                dataContext.Categories.Add(category);
             }
             else
             {
-                throw new InvalidOperationException("Location with the same name already exists.");
+                throw new InvalidOperationException("Category with the same name already exists.");
             }
         }
 
         public void Delete(int id)
         {
-            dataContext.Locations.Remove(Get(id));
+            dataContext.Categories.Remove(Get(id));
         }
 
-        public IEnumerable<Location> Get()
+        public IEnumerable<Category> Get()
         {
-            return dataContext.Locations;
+            return dataContext.Categories;
         }
 
-        public Location? Get(int id)
+        public Category? Get(int id)
         {
-            return dataContext.Locations.Find(id);
+            return dataContext.Categories.Find(id);
         }
-        public void Update(Location location)
+
+        public void Update(Category category)
         {
-            dataContext.Entry(location).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dataContext.Entry(category).State = EntityState.Modified;
         }
 
         public void SaveChanges()
